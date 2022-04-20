@@ -4,7 +4,7 @@ const generateFile = require("./src/readme-template");
 const writeFile = require("./utils/generate-file");
 
 // TODO: Create an array of questions for user input
-const promptTitle = () => {
+const promptQuestions = () => {
   return inquirer.prompt([
     {
       type: "input",
@@ -19,87 +19,66 @@ const promptTitle = () => {
         }
       },
     },
-  ]);
-};
-
-const promptDescription = (projectData) => {
-  if (!projectData.description) {
-    projectData.description = [];
-  }
-
-  console.log(`
-===========
-Description
-===========
-    `);
-
-  return inquirer.prompt([
     {
       type: "input",
-      name: "description",
+      name: "description1",
       message: "What was your motiviation?",
     },
     {
       type: "input",
-      name: "description",
+      name: "description2",
       message: "Why did you build this project?",
     },
     {
       type: "input",
-      name: "description",
+      name: "description3",
       message: "What problem does it solve?",
     },
     {
       type: "input",
-      name: "description",
+      name: "description4",
       message: "What did you learn?",
     },
   ]);
 };
 
-const promptInstallSteps = (projectData) => {
-  if (!projectData.installSteps) {
-    projectData.installSteps = [];
+const promptInstallSteps = (data) => {
+  if (!data.installStepsArr) {
+    data.installStepsArr = [];
   }
 
-  console.log(`
-============
-Installation
-============
-    `);
-
-  return inquirer.prompt([
+  return inquirer
+    .prompt([
       {
         type: "input",
         name: "step",
-        message: "Describe the next step of installation",
+        message: "Describe a new step for installation",
       },
       {
         type: "confirm",
-        name: "stepConfirm",
-        message: "Do you want to add another step?",
+        name: "confirmAddStep",
+        message: "Would you like to add another step?",
         default: false,
       },
     ])
-    .then((installData) => {
-      projectData.installSteps.push(installData);
-      if (installData.stepConfirm) {
-        return promptInstallSteps(projectData);
+    .then((installStep) => {
+      data.installStepsArr.push(installStep);
+      if (installStep.confirmAddStep) {
+        return promptInstallSteps(data);
       } else {
-        return projectData;
+        return data;
       }
     });
 };
 
 // Function call to initialize app
-promptTitle()
-  .then(promptDescription)
+promptQuestions()
   .then(promptInstallSteps)
-  .then((projectData) => {
-    return generateFile(projectData);
+  .then((pageData) => {
+    return generateFile(pageData);
   })
-  .then((fileContent) => {
-    return writeFile(fileContent);
+  .then((writeFileData) => {
+    return writeFile(writeFileData);
   })
   .then((writeFileResponse) => {
     console.log(writeFileResponse);
