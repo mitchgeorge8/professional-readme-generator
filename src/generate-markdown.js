@@ -43,8 +43,6 @@ ${license.text}`
 module.exports = (pageData) => {
   const { title, description, installSteps, usage, credits, license } = pageData;
 
-  console.log(pageData);
-
   return `# ${title}
 
 ## Description
