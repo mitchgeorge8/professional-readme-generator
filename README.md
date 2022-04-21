@@ -46,7 +46,7 @@ Recommended web browser [Google Chrome](https://www.google.com/chrome/)
 
 ### Executing program
 
-Click the link to the website [here](https://mitchgeorge8.github.io/challenge-05-work-day-scheduler/)
+Download this directory, open the terminal in the directory's location, then run "node index".
 
 ## Help
 
@@ -63,10 +63,12 @@ Mitchell George - mitchgeorge8@gmail.com<br/>
 ## Version History
 
 * 0.2
-    * See [commit change](https://github.com/mitchgeorge8/challenge-05-work-day-scheduler/commits/main)
+    * See [commit change](https://github.com/mitchgeorge8/professional-readme-generator/commits/main)
 * 0.1
     * Initial Release
 
 ## License
+
+&copy; 2022 [Mitchell George](https://github.com/mitchgeorge8)
 
 This project is a part of The Ohio State University's Coding Boot Camp.
