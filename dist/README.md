@@ -23,6 +23,10 @@ a
 
 ## Usage
 
+a
+
+![This is a test](../dist/screenshot.png)
+
 ## Credits
 
 ## Licence

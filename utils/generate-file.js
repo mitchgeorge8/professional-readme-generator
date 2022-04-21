@@ -17,6 +17,10 @@ const writeFile = (fileContent) => {
 };
 
 const copyFile = (imagePath) => {
+  if (!imagePath) {
+    return false;
+  }
+
   return new Promise((resolve, reject) => {
     fs.copyFile(imagePath, "./dist/screenshot.png", (err) => {
       if (err) {
@@ -26,7 +30,7 @@ const copyFile = (imagePath) => {
 
       resolve({
         ok: true,
-        message: "Image copied!",
+        message: "Image copied!\n--------------------",
       });
     });
   });

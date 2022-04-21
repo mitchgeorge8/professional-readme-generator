@@ -1,6 +1,6 @@
 // TODO: Include packages needed for this application
 const inquirer = require("inquirer");
-const generateFile = require("./src/readme-template");
+const readmeTemplate = require("./src/readme-template");
 const { writeFile, copyFile } = require("./utils/generate-file");
 
 let data = [];
@@ -146,7 +146,8 @@ const promptUsage = (data) => {
       {
         type: "input",
         name: "image",
-        message: "Copy and paste the file path to your screenshot.",
+        message:
+          "Copy and paste the file path to your screenshot (including the file name).",
         when: ({ confirmImage }) => {
           if (confirmImage) {
             return true;
@@ -155,10 +156,25 @@ const promptUsage = (data) => {
           }
         },
       },
+      {
+        type: "input",
+        name: "altText",
+        message: "Please provide alt text for your image.",
+        when: ({ image }) => {
+          if (image) {
+            return true;
+          } else {
+            return false;
+          }
+        },
+      },
     ])
     .then((usage) => {
+      if (usage.image) {
+        image = usage.image;
+      }
+
       data.usage = usage;
-      image = data.usage.image;
       return data;
     });
 };
@@ -180,13 +196,12 @@ const promptLicense = (data) => {
 };
 
 // Function call to initialize app
-
 promptTitle(data)
   .then(promptDescription)
   .then(promptFirstInstallStep)
   .then(promptUsage)
   .then((pageData) => {
-    return generateFile(pageData);
+    return readmeTemplate(pageData);
   })
   .then((writeFileData) => {
     return writeFile(writeFileData);
@@ -194,9 +209,6 @@ promptTitle(data)
   .then((writeFileResponse) => {
     console.log(writeFileResponse.message);
     return copyFile(image);
-  })
-  .then((copyFileResponse) => {
-    console.log(copyFileResponse.message);
   })
   .catch((err) => {
     console.log(err);
