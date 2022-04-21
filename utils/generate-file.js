@@ -16,4 +16,20 @@ const writeFile = (fileContent) => {
   });
 };
 
-module.exports = writeFile;
+const copyFile = (imagePath) => {
+  return new Promise((resolve, reject) => {
+    fs.copyFile(imagePath, "./dist/screenshot.png", (err) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      resolve({
+        ok: true,
+        message: "Image copied!",
+      });
+    });
+  });
+};
+
+module.exports = { writeFile, copyFile };

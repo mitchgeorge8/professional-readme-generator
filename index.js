@@ -1,9 +1,10 @@
 // TODO: Include packages needed for this application
 const inquirer = require("inquirer");
 const generateFile = require("./src/readme-template");
-const writeFile = require("./utils/generate-file");
+const { writeFile, copyFile } = require("./utils/generate-file");
 
 let data = [];
+let image = "";
 
 // TODO: Create an array of questions for user input
 const promptTitle = (data) => {
@@ -123,17 +124,67 @@ const promptInstallSteps = (data) => {
     });
 };
 
-const promptUsage = (data) => {};
+const promptUsage = (data) => {
+  console.log("\nUsage\n--------------------");
 
-const promptCredits = (data) => {};
+  if (!data.usage) {
+    data.usage = "";
+  }
 
-const promptLicense = (data) => {};
+  return inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "usage",
+        message: "Provide instructions and examples for use.",
+      },
+      {
+        type: "confirm",
+        name: "confirmImage",
+        message: "Would you like to add a screenshot of your project?",
+      },
+      {
+        type: "input",
+        name: "image",
+        message: "Copy and paste the file path to your screenshot.",
+        when: ({ confirmImage }) => {
+          if (confirmImage) {
+            return true;
+          } else {
+            return false;
+          }
+        },
+      },
+    ])
+    .then((usage) => {
+      data.usage = usage;
+      image = data.usage.image;
+      return data;
+    });
+};
+
+const promptCredits = (data) => {
+  console.log("\nCredits\n--------------------");
+
+  if (!data.credits) {
+    data.credits = [];
+  }
+};
+
+const promptLicense = (data) => {
+  console.log("\nLicense\n--------------------");
+
+  if (!data.license) {
+    data.license = [];
+  }
+};
 
 // Function call to initialize app
 
 promptTitle(data)
   .then(promptDescription)
   .then(promptFirstInstallStep)
+  .then(promptUsage)
   .then((pageData) => {
     return generateFile(pageData);
   })
@@ -142,6 +193,10 @@ promptTitle(data)
   })
   .then((writeFileResponse) => {
     console.log(writeFileResponse.message);
+    return copyFile(image);
+  })
+  .then((copyFileResponse) => {
+    console.log(copyFileResponse.message);
   })
   .catch((err) => {
     console.log(err);
