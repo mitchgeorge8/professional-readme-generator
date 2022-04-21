@@ -1,6 +1,6 @@
 // TODO: Include packages needed for this application
 const inquirer = require("inquirer");
-const readmeTemplate = require("./src/readme-template");
+const generateMarkdown = require("./src/generate-markdown");
 const { writeFile, copyFile } = require("./utils/generate-file");
 
 let data = [];
@@ -135,7 +135,7 @@ const promptUsage = (data) => {
     .prompt([
       {
         type: "input",
-        name: "usage",
+        name: "text",
         message: "Provide instructions and examples for use.",
       },
       {
@@ -179,12 +179,57 @@ const promptUsage = (data) => {
     });
 };
 
-const promptCredits = (data) => {
+const promptConfirmCredit = (data) => {
   console.log("\nCredits\n--------------------");
 
   if (!data.credits) {
     data.credits = [];
   }
+
+  return inquirer
+    .prompt([
+      {
+        type: "confirm",
+        name: "confirmCredit",
+        message: "Do you have any collaborators for this project?",
+      },
+    ])
+    .then((confirm) => {
+      if (confirm.confirmCredit) {
+        return promptCredits(data);
+      } else {
+        return data;
+      }
+    });
+};
+
+const promptCredits = (data) => {
+  return inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "name",
+        message: "Name of collaborator:",
+      },
+      {
+        type: "input",
+        name: "link",
+        message: "Link to their GitHub or website:",
+      },
+      {
+        type: "confirm",
+        name: "confirmAddCredit",
+        message: "Do you have any more collaborators/assets you wish to add?",
+      },
+    ])
+    .then((credit) => {
+      data.credits.push(credit);
+      if (credit.confirmAddCredit) {
+        return promptCredits(data);
+      } else {
+        return data;
+      }
+    });
 };
 
 const promptLicense = (data) => {
@@ -193,6 +238,29 @@ const promptLicense = (data) => {
   if (!data.license) {
     data.license = [];
   }
+
+  return inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "name",
+        message: "Enter your full name:",
+      },
+      {
+        type: "input",
+        name: "user",
+        message: "Enter your GitHub username:",
+      },
+      {
+        type: "input",
+        name: "text",
+        message: "Enter the license text:",
+      },
+    ])
+    .then((license) => {
+      data.license = license;
+      return data;
+    });
 };
 
 // Function call to initialize app
@@ -200,8 +268,10 @@ promptTitle(data)
   .then(promptDescription)
   .then(promptFirstInstallStep)
   .then(promptUsage)
+  .then(promptConfirmCredit)
+  .then(promptLicense)
   .then((pageData) => {
-    return readmeTemplate(pageData);
+    return generateMarkdown(pageData);
   })
   .then((writeFileData) => {
     return writeFile(writeFileData);
