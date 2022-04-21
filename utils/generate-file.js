@@ -10,7 +10,7 @@ const writeFile = (fileContent) => {
 
       resolve({
         ok: true,
-        message: "\n--------------------\nFile created!\n--------------------",
+        message: "\nFile created! - Check the 'dist' folder for your new README file\n--------------------",
       });
     });
   });

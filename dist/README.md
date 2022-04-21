@@ -1,14 +1,14 @@
-# Test
+# Professional README Generator
 
 ## Description
 
-I like code
+README files can be tricky to make, especially if you want them to be consistent. This application will create one for you.
 
-I was told to
+I built this project to help myself, and others, create clean and consistent README files.
 
-World peace
+It solves the problem of inconsistent or incomplete README files.
 
-Nothing
+I learned a lot about Node.js and the Inquirer package. I also learned about JavaScript Promises and how they can be very helpful.
 
 ## Table of Contents
 
@@ -19,20 +19,18 @@ Nothing
 
 ## Installation
 
-1. Install
-2. Install again
-3. If that doesn't work, just try installing again
+1. Download this repository.
+2. Open a command prompt and cd to the root folder of this repository.
 
 ## Usage
 
-To use this project, open the command line from the root directory and type 'node index'. Then the prompts will begin. This will be very useful for generating README files in a fast and consistent manner.
+To use this application, simply open the command line and run the code above. Then follow the prompts and a professional README will be generated for you and placed in the 'dist' folder. This is great for creating quick and easy README files.
 
 ![Working README generator](../dist/screenshot.png)
 
 ## Credits
 
-1. [Mitchell George](https://github.com/mitchgeorge8)
-2. [Test User](https://github.com/test)
+1. [Professional README Guide](https://coding-boot-camp.github.io/full-stack/github/professional-readme-guide)
 
 ## License
 

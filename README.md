@@ -48,6 +48,8 @@ Recommended web browser [Google Chrome](https://www.google.com/chrome/)
 
 Download this directory, open the terminal in the directory's location, then run "node index".
 
+![Working README generator](./assets/images/screenshot.PNG)
+
 ## Help
 
 Find help at [MDN Web Docs](https://developer.mozilla.org/en-US/)
