@@ -1,27 +1,31 @@
 const generateMarkdown = require("../utils/generate-markdown");
 
-const generateInstallSteps = (installStepsArr) => {
-  return `${installStepsArr
-    .map(({ step }) => {
-      return `- ${step}`;
-    })
-    .join("\n")}`;
+const generateInstallSteps = (installSteps) => {
+  let installString = "";
+
+  for (i=0; i < installSteps.length; i++) {
+    installString += `${(i + 1)}. ${installSteps[i].step}\n`
+  }
+
+  return installString;
 };
 
 module.exports = (pageData) => {
-  const { installStepsArr, ...data } = pageData;
+  const { description, installSteps, title } = pageData;
 
-  return `# ${data.title}
+  console.log(pageData);
+
+  return `# ${title}
 
 ## Description
 
-${data.description1}
+${description.des1}
 
-${data.description2}
+${description.des2}
 
-${data.description3}
+${description.des3}
 
-${data.description4}
+${description.des4}
 
 ## Table of Contents
 
@@ -32,20 +36,13 @@ ${data.description4}
 
 ## Installation
 
-${generateInstallSteps(installStepsArr)}
-
+${generateInstallSteps(installSteps)}
 ## Usage
 
 ## Credits
 
-## Licence
+## Licence`
 
-## Badges
-
-## Features
-
-## How to Contribute
-
-## Tests
-`;
+// ${generateMarkdown(license)}
+// `;
 };
